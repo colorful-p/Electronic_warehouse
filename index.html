@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#4f6df5" />
+  <meta name="description" content="电子元器件物料库管理系统" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>物料库</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E📦%3C/text%3E%3C/svg%3E" />
+</head>
+
+<body>
+
+  <!-- ============ 顶部固定栏 ============ -->
+  <header class="header">
+    <span class="header-logo">📦</span>
+    <span class="header-title">物料库</span>
+    <span class="header-spacer"></span>
+    <button class="theme-toggle" id="themeToggle" title="切换主题">🌙</button>
+  </header>
+
+  <!-- ============ 搜索栏 ============ -->
+  <div class="search-bar">
+    <div class="search-input-wrap">
+      <input
+        type="search"
+        id="searchInput"
+        class="search-input"
+        placeholder="搜索任意字段..."
+        autocomplete="off"
+      />
+    </div>
+  </div>
+
+  <!-- ============ 统计 / 厂家筛选 ============ -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- ============ 物料卡片列表 ============ -->
+  <main class="card-list" id="cardList"></main>
+
+  <!-- ============ 空状态 ============ -->
+  <div class="empty-state" id="emptyState" style="display: none;">
+    <div class="empty-state-icon">📦</div>
+    <div class="empty-state-text">没有找到匹配的物料</div>
+  </div>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="footer">
+    共 <strong id="totalCount">0</strong> 条记录 · Excel → VBA → 网站一键生成
+  </footer>
+
+  <!-- ============ 浮动扫码按钮 ============ -->
+  <button class="fab" id="fab" title="扫码查找">📷</button>
+
+  <!-- ============ 详情弹窗 ============ -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-body">
+        <div class="modal-id-label" id="modalIdLabel"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-subtitle" id="modalSubtitle"></div>
+
+        <div class="detail-grid" id="detailGrid"></div>
+
+        <div class="action-buttons" id="actionButtons"></div>
+
+        <div class="qr-section" id="qrSection" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 扫码视图 ============ -->
+  <div class="scanner-overlay" id="scannerOverlay">
+    <div class="scanner-header">
+      <button class="scanner-close" id="scannerClose">✕</button>
+      <span class="scanner-title">扫描二维码</span>
+    </div>
+    <div class="scanner-video-wrap">
+      <video id="scannerVideo" playsinline></video>
+      <div class="scanner-frame"></div>
+      <div class="scanner-hint">将二维码对准框内即可自动识别</div>
+    </div>
+    <div class="scanner-unsupported" id="scannerUnsupported" style="display: none;">
+      <div class="scanner-unsupported-icon">📷</div>
+      <p>当前浏览器不支持扫码功能</p>
+      <p style="margin-top: 8px; font-size: 13px; opacity: 0.6;">
+        请使用手机系统相机扫描二维码，<br />会自动打开对应元件页面
+      </p>
+    </div>
+  </div>
+
+  <!-- ============ Toast ============ -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ============ 数据 + 逻辑 ============ -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
