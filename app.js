@@ -27,7 +27,6 @@
     modalSubtitle: $("#modalSubtitle"),
     detailGrid: $("#detailGrid"),
     actionButtons: $("#actionButtons"),
-    qrSection: $("#qrSection"),
     modalClose: $("#modalClose"),
     scannerOverlay: $("#scannerOverlay"),
     scannerVideo: $("#scannerVideo"),
@@ -334,7 +333,7 @@
 
     el.detailGrid.innerHTML = idRow + detailRows;
 
-    // 操作按钮：Datasheet（可选）+ 二维码
+    // 操作按钮：Datasheet（可选）
     const dsUrl = colDatasheet ? getVal(m, colDatasheet) : "";
     const hasDatasheet = /^https?:\/\//i.test(dsUrl);
 
@@ -345,51 +344,16 @@
            </a>`
         : ""
       }
-      <button class="action-btn action-btn-outline" id="btnShowQR">
-        \u{1F4F1} 二维码
-      </button>
     `;
 
-    renderQR(m);
     el.modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
-
-    const btnQR = document.getElementById("btnShowQR");
-    if (btnQR) {
-      btnQR.addEventListener("click", function () {
-        el.qrSection.style.display =
-          el.qrSection.style.display === "none" ? "block" : "none";
-        if (el.qrSection.style.display === "block") {
-          el.qrSection.scrollIntoView({ behavior: "smooth", block: "end" });
-        }
-      });
-    }
   }
 
   function closeDetail() {
     el.modalOverlay.classList.remove("active");
     document.body.style.overflow = "";
     history.replaceState(null, "", window.location.pathname);
-  }
-
-  // ============================================================
-  //  二维码生成
-  // ============================================================
-  function renderQR(m) {
-    const baseUrl = window.location.href.split("?")[0];
-    const qrUrl = baseUrl + "?id=" + encodeURIComponent(getId(m));
-    const qrImgUrl =
-      "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" +
-      encodeURIComponent(qrUrl);
-
-    el.qrSection.innerHTML = `
-      <div class="qr-section-title">\u{1F4F1} 扫码快速访问此元件</div>
-      <img class="qr-img" src="${escapeAttr(qrImgUrl)}" alt="QR Code" />
-      <div class="qr-hint">
-        \u626B\u7801\u540E\u624B\u673A\u81EA\u52A8\u6253\u5F00\u6B64\u9875\u9762\u5E76\u663E\u793A\u8BE5\u5143\u4EF6\u8BE6\u60C5
-      </div>
-    `;
-    el.qrSection.style.display = "none";
   }
 
   // ============================================================
